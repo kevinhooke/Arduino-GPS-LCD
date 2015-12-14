@@ -14,6 +14,16 @@ Kevin Hooke / @kevinhooke
 #include <Adafruit_GPS.h>
 #include <SoftwareSerial.h>
 
+//colors
+#define OFF 0x0
+#define RED 0x1
+#define YELLOW 0x3
+#define GREEN 0x2
+#define TEAL 0x6
+#define BLUE 0x4
+#define VIOLET 0x5
+#define WHITE 0x7 
+
 SoftwareSerial mySerial(3, 2);
 
 Adafruit_GPS GPS(&mySerial);
@@ -122,9 +132,18 @@ void loop()                     // run over and over again
   uint8_t buttons = lcd.readButtons();
 
   if (buttons) {
-    lcd.clear();
+    
+    if(buttons & BUTTON_UP){
+      lcd.setBacklight(WHITE);
+    }
+
+    if(buttons & BUTTON_DOWN){
+      lcd.setBacklight(OFF);    
+    }
+    
     //if button pressed, cycle through display combinations
     if (buttons & BUTTON_RIGHT) {
+      lcd.clear();
       if (buttonState >= 2) {
         buttonState = 0;
       }
